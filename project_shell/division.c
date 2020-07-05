@@ -6,6 +6,7 @@
 #include <fcntl.h>
 
 #define BUFSIZE 100
+FILE *hist;
 
 int noclobber = 0;
 
@@ -47,6 +48,52 @@ void division(char command[BUFSIZE][BUFSIZE], int start, int last, int backgroun
                 }
                 b++;
                 k = 0;
+            }
+        }
+        else if (!strcmp(command[i], "!"))
+        {
+            int num = atoi(command[++i]);
+            int new_start;
+            int new_last;
+            char list;
+            int find = 0;
+            int c = 0;
+            char new_buffer[BUFSIZE];
+            char new_command[BUFSIZE][BUFSIZE];
+            rewind(hist);
+            while ((list = fgetc(hist)) != EOF)
+            {
+                new_buffer[c++] = list;
+                if (list == '\n' && find != num)
+                {
+                    find++;
+                    c = 0;
+                }
+                if (find > num)
+                {
+                    break;
+                }
+            }
+            new_buffer[c] = '\0';
+
+            new_last = parsing(new_buffer, new_command) + 1;
+            if (new_command[0][0] == '\0')
+            {
+                new_start = 1;
+            }
+            else
+            {
+                new_start = 0;
+            }
+            division(new_command, new_start, new_last, background, brac);
+        }
+        else if (!strcmp(command[i], "history"))
+        {
+            rewind(hist);
+            char list;
+            while ((list = fgetc(hist)) != EOF)
+            {
+                printf("%c", list);
             }
         }
 
