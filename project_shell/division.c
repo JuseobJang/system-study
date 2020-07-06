@@ -96,7 +96,15 @@ void division(char command[BUFSIZE][BUFSIZE], int start, int last, int backgroun
                 printf("%c", list);
             }
         }
-
+        else if (!strcmp(command[i], "cd"))
+        {
+            if (!strcmp(command[i + 1], ""))
+                chdir(getenv("HOME"));
+            else if (chdir(command[++i]) < 0)
+            {
+                perror("Change Directory Error");
+            }
+        }
         else
         {
             if (brac == 0)
