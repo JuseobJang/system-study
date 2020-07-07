@@ -97,6 +97,7 @@ void division(char command[BUFSIZE][BUFSIZE], int start, int last, int backgroun
             }
         }
         else if (!strcmp(command[i], "cd"))
+
         {
             if (!strcmp(command[i + 1], ""))
                 chdir(getenv("HOME"));
@@ -104,6 +105,278 @@ void division(char command[BUFSIZE][BUFSIZE], int start, int last, int backgroun
             {
                 perror("Change Directory Error");
             }
+        }
+        else if (!strcmp(command[i], "cat") && !strcmp(command[i + 1], ">"))
+        {
+            char buf[BUFSIZE];
+            if (fork() == 0)
+            {
+                int fd = open(command[i + 2], O_CREAT | O_TRUNC | O_WRONLY | O_APPEND, 0644);
+                if (fd < 0)
+                {
+                    error("open error");
+                }
+
+                dup2(fd, 1);
+
+                while (1)
+                {
+                    if (scanf("%s", buf) == EOF)
+
+                    {
+                        exit(0);
+                    }
+
+                    else
+                    {
+                        printf("%s\n", buf);
+                    }
+                }
+            }
+            if (background == 0)
+            {
+                wait(0);
+            }
+            i = i + 2;
+        }
+
+        else if (!strcmp(command[i], ">"))
+        {
+            if (!strcmp(command[i - 1], ")"))
+            {
+                if (!strcmp(command[i + 1], ">"))
+                {
+                    fd = open(command[i + 2], O_CREAT | O_WRONLY | O_APPEND, 0644);
+
+                    dup2(fd, 1);
+                    for (int c = 0; c < b + 1; c++)
+                    {
+                        if (fork() == 0)
+                        {
+                            execvp(brac_cmd[c][0], brac_cmd[c]);
+                        }
+                        if (background == 0)
+                            wait(NULL);
+                    }
+                    i = i + 2;
+                    dup2(save_stdout, 1);
+                    fd = 0;
+                }
+                else if (!strcmp(command[i + 1], "|"))
+                {
+                    fd = open(command[i + 2], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+
+                    dup2(fd, 1);
+                    for (int c = 0; c < b + 1; c++)
+                    {
+                        if (fork() == 0)
+                        {
+                            execvp(brac_cmd[c][0], brac_cmd[c]);
+                        }
+                        if (background == 0)
+                            wait(NULL);
+                    }
+                    i = i + 2;
+                    dup2(save_stdout, 1);
+                    fd = 0;
+                }
+                else
+                {
+                    if (noclobber == 0)
+                    {
+                        fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+                    }
+                    else
+                    {
+                        fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC | O_EXCL, 0644);
+                    }
+
+                    dup2(fd, 1);
+                    for (int c = 0; c < b + 1; c++)
+                    {
+                        if (fork() == 0)
+                        {
+                            execvp(brac_cmd[c][0], brac_cmd[c]);
+                        }
+                        if (background == 0)
+                            wait(NULL);
+                    }
+                    i = i + 1;
+                    dup2(save_stdout, 1);
+                    fd = 0;
+                }
+            }
+            else if (strcmp(command[i - 1], ")") && brac == 1)
+            {
+                if (!strcmp(command[i + 1], ">"))
+                {
+                    fd = open(command[i + 2], O_CREAT | O_WRONLY | O_APPEND, 0644);
+
+                    dup2(fd, 1);
+
+                    if (fork() == 0)
+                    {
+                        execvp(brac_cmd[b][0], brac_cmd[b]);
+                    }
+                    if (background == 0)
+                        wait(NULL);
+                    b--;
+                    i = i + 2;
+                    dup2(save_stdout, 1);
+                    fd = 0;
+                }
+                else if (!strcmp(command[i + 1], "|"))
+                {
+                    fd = open(command[i + 2], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+
+                    dup2(fd, 1);
+
+                    if (fork() == 0)
+                    {
+                        execvp(brac_cmd[b][0], brac_cmd[b]);
+                    }
+                    if (background == 0)
+                        wait(NULL);
+                    b--;
+                    i = i + 2;
+                    dup2(save_stdout, 1);
+                    fd = 0;
+                }
+
+                else
+                {
+                    if (noclobber == 0)
+                    {
+                        fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+                    }
+                    else
+                    {
+                        fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC | O_EXCL, 0644);
+                    }
+
+                    dup2(fd, 1);
+
+                    if (fork() == 0)
+                    {
+                        execvp(brac_cmd[b][0], brac_cmd[b]);
+                    }
+                    if (background == 0)
+                        wait(NULL);
+                    b--;
+                    i = i + 1;
+                    dup2(save_stdout, 1);
+                    fd = 0;
+                }
+            }
+            else if (strcmp(command[i - 1], ")"))
+            {
+                if (!strcmp(command[i + 1], ">"))
+                {
+                    if (fork() == 0)
+                    {
+                        dup2(fd, 0);
+
+                        int fd = open(command[i + 2], O_CREAT | O_WRONLY | O_APPEND, 0644);
+                        if (fd < 0)
+                        {
+                            perror("File Open Error");
+                            exit(1);
+                        }
+
+                        dup2(fd, 1);
+                        execvp(seob[j][0], seob[j]);
+                        execvp(seob[j - 1][0], seob[j - 1]);
+                    }
+
+                    if (background == 0)
+                    {
+                        wait(NULL);
+                    }
+                    i = i + 2;
+                    j++;
+                    k = 0;
+                }
+                else if (!strcmp(command[i + 1], "|"))
+                {
+                    if (fork() == 0)
+                    {
+                        dup2(fd, 0);
+
+                        int fd = open(command[i + 2], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+                        if (fd < 0)
+                        {
+                            perror("File Open Error");
+                            exit(1);
+                        }
+                        dup2(fd, 1);
+                        execvp(seob[j][0], seob[j]);
+                        execvp(seob[j - 1][0], seob[j - 1]);
+                    }
+                    if (background == 0)
+                    {
+                        wait(NULL);
+                    }
+                    i = i + 2;
+                    j++;
+                    k = 0;
+                }
+
+                else
+                {
+                    if (fork() == 0)
+                    {
+                        dup2(fd, 0);
+
+                        int fd;
+                        if (noclobber == 0)
+                        {
+                            fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+                        }
+                        else
+                        {
+                            fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC | O_EXCL, 0644);
+                        }
+
+                        if (fd < 0)
+                        {
+                            perror("File Open Error");
+                            exit(1);
+                        }
+                        dup2(fd, 1);
+                        execvp(seob[j][0], seob[j]);
+                        execvp(seob[j - 1][0], seob[j - 1]);
+                    }
+                    if (background == 0)
+                    {
+                        wait(NULL);
+                    }
+                    i = i + 1;
+                    j++;
+                    k = 0;
+                }
+            }
+        }
+        else if (!strcmp(command[i], "<"))
+        {
+            if (fork() == 0)
+            {
+
+                int fd = open(command[i + 1], O_RDONLY, 0);
+                if (fd < 0)
+                {
+                    perror("File Open Error");
+                    exit(1);
+                }
+                dup2(fd, 0);
+                execvp(seob[j][0], seob[j]);
+            }
+            if (background == 0)
+            {
+                wait(NULL);
+            }
+            i = i + 1;
+            j++;
+            k = 0;
         }
         else
         {
