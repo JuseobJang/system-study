@@ -378,6 +378,30 @@ void division(char command[BUFSIZE][BUFSIZE], int start, int last, int backgroun
             j++;
             k = 0;
         }
+        else if (!strcmp(command[i], "|"))
+        {
+
+            int files[2];
+            pipe(files);
+
+            if (fork() == 0)
+            {
+                dup2(fd, 0);
+                dup2(files[1], 1);
+                close(files[0]);
+                execvp(seob[j][0], seob[j]);
+            }
+            if (background == 0)
+            {
+                wait(NULL);
+            }
+            close(files[1]);
+
+            fd = files[0];
+
+            j++;
+            k = 0;
+        }
         else
         {
             if (brac == 0)
