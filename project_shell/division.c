@@ -50,6 +50,27 @@ void division(char command[BUFSIZE][BUFSIZE], int start, int last, int backgroun
                 k = 0;
             }
         }
+        else if (!strcmp(command[i], "("))
+        {
+            brac = 1;
+        }
+        else if (!strcmp(command[i], ")"))
+        {
+
+            if (strcmp(command[i + 1], ">"))
+            {
+                brac = 0;
+                for (int c = 0; c < b + 1; c++)
+                {
+                    if (fork() == 0)
+                    {
+                        execvp(brac_cmd[c][0], brac_cmd[c]);
+                    }
+                    if (background == 0)
+                        wait(NULL);
+                }
+            }
+        }
         else if (!strcmp(command[i], "!"))
         {
             int num = atoi(command[++i]);
