@@ -1,0 +1,22 @@
+a.txt
+b.txt
+division.c
+history.txt
+parsing.c
+shell
+smsh.c
+total 120
+-rw-r--r--  1 seob_jj     58  7 13 22:14 a.txt
+-rw-r--r--  1 seob_jj      7  7 13 22:00 b.txt
+-rw-r--r--@ 1 seob_jj  12658  7 13 16:47 division.c
+-rw-r--r--  1 seob_jj    484  7 13 22:14 history.txt
+-rw-------@ 1 seob_jj   1032  7  2 23:02 parsing.c
+-rwxr-xr-x  1 seob_jj  22348  7 13 16:47 shell
+-rw-r--r--@ 1 seob_jj   2302  7 13 16:45 smsh.c
+11673203 a.txt
+11674298 b.txt
+11515263 division.c
+11667583 history.txt
+11440560 parsing.c
+11667580 shell
+11538060 smsh.c
