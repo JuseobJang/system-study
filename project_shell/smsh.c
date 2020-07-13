@@ -10,7 +10,6 @@
 #define BUFSIZE 100
 
 char history[BUFSIZE][BUFSIZE];
-int noclobber = 0;
 FILE *hist;
 
 void error(char *msg)

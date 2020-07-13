@@ -6,9 +6,9 @@
 #include <fcntl.h>
 
 #define BUFSIZE 100
-FILE *hist;
-
 int noclobber = 0;
+
+FILE *hist;
 
 void division(char command[BUFSIZE][BUFSIZE], int start, int last, int background, int brac)
 {
@@ -135,7 +135,7 @@ void division(char command[BUFSIZE][BUFSIZE], int start, int last, int backgroun
                 int fd = open(command[i + 2], O_CREAT | O_TRUNC | O_WRONLY | O_APPEND, 0644);
                 if (fd < 0)
                 {
-                    error("open error");
+                    perror("open error");
                 }
 
                 dup2(fd, 1);
