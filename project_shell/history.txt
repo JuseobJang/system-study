@@ -5,3 +5,55 @@ cd project_shell
 ls
 history
 exit
+ls
+ls;ls
+ls;ls-o
+ls -o; ls -l
+ls -l
+ls -o
+exit
+[A
+exit
+exit
+ls
+ls;ls -o
+ls ; ls -l ;ls -o
+ls -l
+exit
+ls ; ls -o; ls -i
+clear
+ls
+./shell
+ls
+ls > a.txt
+cat a.txt
+wc < ls -o
+wc
+ls
+wc < a.txt
+ls -o >> a.txt
+cat a.txt
+ls -i >| a.txt
+cat a.txt
+cat > a.txt
+cat > b.txt
+ls
+cat b.txt
+cat a.txt
+cat > a.txt
+ls
+cat a.txt
+ls
+clear
+history
+!0
+l
+ls
+ls
+ls | sort
+ls | sort | grep txt
+clear
+(ls | sort | grep txt) > a.txt
+ls
+(ls ; ls -o ; ls -i) > a.txt
+cat a.txt
