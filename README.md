@@ -4,36 +4,36 @@ My project_shell
 ----------------
 
 1. Executed initial shell
-> <img src="/executeShell.png"></img>
+> <img src="/image/executeShell.png" width="60%"></img>
 
 2. General command "ls"
-> <img src="/multipleCommand_1.png"></img>
+> <img src="/image/multipleCommand_1.png" width="60%"></img>
 
 3. Multiple command using ";"
-> <img src="/multipleCommand_2.png"></img>
-> <img src="/multipleCommand_3.png"></img>
+> <img src="/image/multipleCommand_2.png" width="60%"></img>
+> <img src="/image/multipleCommand_3.png" width="60%"></img>
 
 4. Redirection
-> using ">"
-> <img src="/redirection_1.png"></img>
-> using "<"
-> <img src="/redirection_2.png"></img>
-> using ">>"
-> <img src="/redirection_3.png"></img>
-> using ">|"
-> <img src="/redirection_4.png"></img>
+> - using ">"   
+> <img src="/image/redirection_1.png" width="60%"></img>   
+> - using "<"   
+> <img src="/image/redirection_2.png" width="60%"></img>   
+> - using ">>"   
+> <img src="/image/redirection_3.png" width="60%"></img>   
+> - using ">|"   
+> <img src="/image/redirection_4.png" width="60%"></img>   
 
 5. History
-> "history" command
-> <img src="/history.png"></img> 
-> using "!"
-> <img src="/history_1.png"></img>
+> - "history" command   
+> <img src="/image/history.png" width="60%"></img>    
+> - using "!"   
+> <img src="/image/history_1.png" width="60%"></img>   
 
 6. Pipe
-> single pipe
-> <img src="/pipe.png"></img>
-> multiple pipe
-> <img src="/pipe_1.png"></img>
+> - single pipe     
+> <img src="/image/pipe.png" width="60%"></img>   
+> - multiple pipe   
+> <img src="/image/pipe_1.png" width="60%"></img>   
 
-7. Bracket
-> <img src="/bracket.png"></img>
+7. Bracket 
+> <img src="/image/bracket.png" width="60%"></img>   
