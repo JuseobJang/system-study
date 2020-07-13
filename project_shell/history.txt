@@ -1,0 +1,6 @@
+ls
+cd ..
+ls
+cd project_shell
+ls
+history
